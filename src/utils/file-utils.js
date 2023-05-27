@@ -1,18 +1,6 @@
 
-function sanitize_filename(filename){
-    filename = filename.replace("/","_")
-    filename = filename.replace("{","_")
-    filename = filename.replace("}","_")
-    filename = filename.replace("#","_")
-    filename = filename.replace("%","_")
-    filename = filename.replace("&","_")
-    filename = filename.replace("<","_")
-    filename = filename.replace(">","_")
-    filename = filename.replace("$","_")
-    filename = filename.replace("-","_")
-    filename = filename.replace("+","_")
-    filename = filename.replace("=","_")
-    return filename;
+function sanitize_filename(filename) {
+    return filename.replace(/[\/{}#%&<>$+=-]/g, "_");
 }
-
+  
 module.exports = {sanitize_filename};
