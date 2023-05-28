@@ -1,6 +1,6 @@
 
 function sanitize_filename(filename) {
-    return filename.replace(/[\/{}#%&<>$+=-]/g, "_");
+    return filename.replace(/[\/{}#%&<>$+=-]/g, "_");   
 }
   
 module.exports = {sanitize_filename};

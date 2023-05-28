@@ -1,6 +1,6 @@
 const multer = require('multer');
 const path = require('path');
-const {sanitize_filename} = require("../utils/file-utils")
+const {sanitize_filename} = require("../utils/security.utils")
 const {UPLOAD_FILES_DIRECTORY_PATH} = require("../constants/files.constants")
 const storage = multer.diskStorage(
     {
@@ -12,17 +12,18 @@ const storage = multer.diskStorage(
         }
     }
 )
-var size_limit = { fileSize: 5 * 1024 * 1024} // file size limit to 5 MB
+var size_limit = { fileSize: 1024 * 1024 * 1024} // file size limit to 5 MB
 
 const filter_upload = (req, file, c_) => {
     // only accept image files of extension jpg, png and jpeg
-    if (file.mimetype.split("/").includes("image") && 
-    [".jpg",".png",".jpeg"].includes(path.extname(file.originalname.toLowerCase()))
-    ){
-        c_(null,true);
-    }else{
-        c_(null,false);
-    }
+    // if (file.mimetype.split("/").includes("image") && 
+    // [".jpg",".png",".jpeg"].includes(path.extname(file.originalname.toLowerCase()))
+    // ){
+    //     c_(null,true);
+    // }else{
+    //     c_(null,false);
+    // }
+    c_(null,true);
 }
 
 module.exports = multer({

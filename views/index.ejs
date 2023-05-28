@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>File Upload</title>
+</head>
+<body>
+    <h1>File Upload</h1>
+    <form method="post" enctype="multipart/form-data" action="/api/files/upload">
+        <input type="file" name="file">
+        <br><br>
+        <button type="submit">Upload</button>
+    </form>
+    <div class="files-container">
+        <ul id="files-list">
+            
+        </ul>
+    </div>
+    <script>
+        fetch("/api/files")
+            .then(res=>res.json())
+            .then(data=>{
+                if (data.total_files){
+                    let files_list = document.getElementById("files-list")
+                    data.files.forEach(file => {
+                        let anchor = document.createElement("a")
+                        anchor.setAttribute("class","file-link");
+                        anchor.setAttribute("href",file.url);
+                        anchor.style.display = "block";
+                        anchor.setAttribute("target","_blank");
+                        anchor.textContent = file.filename;
+                        files_list.append(anchor);
+                    });
+                }
+            })
+    </script>
+</body>
+</html>

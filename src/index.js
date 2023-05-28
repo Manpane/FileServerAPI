@@ -4,6 +4,10 @@ const api_routes = require("../src/routes/file.routes");
 const server = express();
 
 //routes
+server.set("view engine","ejs");
+
+server.get("/",(req,res)=>res.render("index"))
+
 server.use("/api/files", api_routes);
 
 //starting the server

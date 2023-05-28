@@ -23,6 +23,9 @@ function getFiles(req,res){
         let filespath = path.resolve(__dirname+"/../../files/");
         let dirList = fs.readdirSync(filespath);
         let files = dirList.filter((path=>fs.statSync(filespath+"/"+path).isFile())) 
+        files = files.map(filename=>{ 
+            return {filename: filename, url:"/api/files/"+filename} 
+        });
         return res.status(StatusCodes.OK).json({"files":files,"total_files":files.length});
     } catch (error) {
         return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({"error":"Server error"})
@@ -31,16 +34,21 @@ function getFiles(req,res){
 
 
 //Upload file response controller
-function uploadFile(req,res){
+function respond_upload(req,res){
     let uploaded_filename = req.file?.filename;
     if (!uploaded_filename){
         throw new Error(UPLOAD_ERROR)
     }
-    return res.status(StatusCodes.OK).json({
-        "file":req.file.filename,
-        "url":`http://localhost:8000/api/files/${req.file.filename}`
-    })
+    res.redirect("/")
+    // return res.status(StatusCodes.OK).json({
+    //     "file":req.file.filename,
+    //     "url":`/api/files/${req.file.filename}`
+    // })
 }
 
 
-module.exports = {getFile,getFiles,uploadFile};
+function deleteFile(req,res){
+    
+}
+
+module.exports = {getFile,getFiles,respond_upload,deleteFile};
